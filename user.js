@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VIP 视频在线解析
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  try to take over the world!
 // @author       You
 // @license      MIT
@@ -178,6 +178,19 @@
         $('#asvideoBtn').css({ 'font-weight': 'bold', 'font-size': '14px', display: 'inline-block', height: '32px', 'line-height': '32px', margin: '0 5px' });
     }
     $('#asvideoBtn').on('click', function() {
-        window.location.href = 'http://api.bbbbbb.me/jx/?url=' + videoSite;
+        const iframe = document.createElement('iframe');
+        iframe.src = 'http://api.bbbbbb.me/jx/?url=' + videoSite;
+        iframe.style.position = 'fixed';
+        iframe.style.height = '100%';
+        iframe.style.width = '100%';
+        iframe.style.top = 0;
+        iframe.style.left = 0;
+        iframe.style.zIndex = 9999;
+        iframe.onload = function(_) {
+            console.log(_);
+        };
+        // box.append(iframe);
+        document.body.append(iframe);
+        // window.location.href = 'http://api.bbbbbb.me/jx/?url=' + videoSite;
     });
 })();
