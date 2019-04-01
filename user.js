@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VIP 视频在线解析
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  VIP 视频在线解析!
 // @author       echochao
 // @license      MIT
