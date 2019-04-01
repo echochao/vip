@@ -9,10 +9,14 @@
             body {
                 margin: 0;
                 padding: 0;
-                height: 100%;
+                height: 100vh;
                 width: 100%;
+                overflow: hidden;
             }
             #iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
                 height: 100%;
                 width: 100%;
             }
@@ -30,7 +34,7 @@
                 return null;
             }
             console.log(getQueryString('url'));
-            document.querySelector('#iframe').src = '';
+            document.querySelector('#iframe').src = 'http://api.bbbbbb.me/jx/?url=' + getQueryString('url');
         })();
     </script>
 </html>

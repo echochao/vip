@@ -177,7 +177,7 @@
         }
     }).then(() => {
         $('#asvideoBtn').on('click', function() {
-            // window.location.href = 'http://api.bbbbbb.me/jx/?url=' + videoSite;
+            window.location.href = 'https://echochao.github.io/vip/?url=' + videoSite;
         });
     });
 })();
