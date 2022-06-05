@@ -45,7 +45,7 @@
     const reYYT = /yinyuetai/i;
     const vipBtn = '<a id="asvideoBtn" style="cursor:pointer;text-decoration:none;color:green;padding:0 5px;border:1px solid green;">一键vip解析</a>';
     const $ = window.jQuery;
-    const redirectUrl = `http://api.bbbbbb.me/jx/?url=`;
+    const redirectUrl = `https://okjx.cc/?url=`;
     new Promise(resolve => {
         // 优酷
         if (reYk.test(videoSite)) {
@@ -107,6 +107,17 @@
         }
         // 腾讯
         if (reTX.test(videoSite)) {
+            setTimeout(()=>{
+                const list = []
+                $(".mod_episode").find('span').each((i,dom)=>{
+                    const img = $(dom).find('img')[0]
+                    const a = $(dom).find('a')[0]
+                    if(!img || img.src.indexOf("trailerlite")==-1) {
+                        list.push(`${redirectUrl}${a.href}`)
+                    }
+                })
+                console.log(list)
+            },3000)
             var qqTitle = $('.mod_intro').find('.video_title');
             qqTitle.eq(0).after(vipBtn);
             $('#asvideoBtn').css({ 'font-size': '24px', display: 'inline-block', height: '36px', 'line-height': '36px', margin: '0 5px' });
@@ -177,7 +188,9 @@
         }
     }).then(() => {
         $('#asvideoBtn').on('click', function() {
-            window.location.href = 'https://echochao.github.io/vip/?url=' + videoSite;
+            window.location.href = `${redirectUrl}${window.location.href}` ;
         });
     });
 })();
+
+
