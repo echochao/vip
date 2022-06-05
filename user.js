@@ -107,6 +107,17 @@
         }
         // 腾讯
         if (reTX.test(videoSite)) {
+            setTimeout(()=>{
+                const list = []
+                $(".mod_episode").find('span').each((i,dom)=>{
+                    const img = $(dom).find('img')[0]
+                    const a = $(dom).find('a')[0]
+                    if(!img || img.src.indexOf("trailerlite")==-1) {
+                        list.push(a.href)
+                    }
+                })
+                console.log(list)
+            },3000)
             var qqTitle = $('.mod_intro').find('.video_title');
             qqTitle.eq(0).after(vipBtn);
             $('#asvideoBtn').css({ 'font-size': '24px', display: 'inline-block', height: '36px', 'line-height': '36px', margin: '0 5px' });
