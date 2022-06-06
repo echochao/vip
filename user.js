@@ -27,7 +27,7 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
     var curWords = '';
     const videoSite = window.location.href;
@@ -107,17 +107,17 @@
         }
         // 腾讯
         if (reTX.test(videoSite)) {
-            setTimeout(()=>{
+            setTimeout(() => {
                 const list = []
-                $(".mod_episode").find('span').each((i,dom)=>{
+                $(".mod_episode").find('span').each((i, dom) => {
                     const img = $(dom).find('img')[0]
                     const a = $(dom).find('a')[0]
-                    if(!img || img.src.indexOf("trailerlite")==-1) {
-                        list.push(`${redirectUrl}${a.href}`)
+                    if (!img || img.src.indexOf("trailerlite") == -1) {
+                        list.push(`第${list.length+1}集 : ${redirectUrl}${a.href}`)
                     }
                 })
                 console.log(list)
-            },3000)
+            }, 3000)
             var qqTitle = $('.mod_intro').find('.video_title');
             qqTitle.eq(0).after(vipBtn);
             $('#asvideoBtn').css({ 'font-size': '24px', display: 'inline-block', height: '36px', 'line-height': '36px', margin: '0 5px' });
@@ -187,8 +187,8 @@
             resolve();
         }
     }).then(() => {
-        $('#asvideoBtn').on('click', function() {
-            window.location.href = `${redirectUrl}${window.location.href}` ;
+        $('#asvideoBtn').on('click', function () {
+            window.location.href = `${redirectUrl}${window.location.href}`;
         });
     });
 })();
