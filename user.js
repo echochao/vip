@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VIP 视频在线解析
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.0
 // @description  VIP 视频在线解析!
 // @author       echochao
 // @license      MIT
@@ -27,7 +27,10 @@
 // @grant        none
 // ==/UserScript==
 
-(function () {
+
+
+
+(function() {
     'use strict';
     var curWords = '';
     const videoSite = window.location.href;
@@ -46,6 +49,16 @@
     const vipBtn = '<a id="asvideoBtn" style="cursor:pointer;text-decoration:none;color:green;padding:0 5px;border:1px solid green;">一键vip解析</a>';
     const $ = window.jQuery;
     const redirectUrl = `https://okjx.cc/?url=`;
+
+    function getQueryString(name,str) {
+        let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        let r = str.match(reg);
+        if (r != null) {
+            return decodeURIComponent(r[2]);
+        };
+        return null;
+    }
+
     new Promise(resolve => {
         // 优酷
         if (reYk.test(videoSite)) {
@@ -93,8 +106,8 @@
             $('#asvideoBtn').css({ 'font-size': '16px', display: 'inline-block', height: '20px', 'line-height': '20px', margin: '0 5px' });
             if (
                 $('.Info')
-                    .find('.title')
-                    .find('h3').length !== 0
+                .find('.title')
+                .find('h3').length !== 0
             ) {
                 curWords = $('.Info')
                     .find('.title')
@@ -107,19 +120,22 @@
         }
         // 腾讯
         if (reTX.test(videoSite)) {
-            setTimeout(() => {
+            setTimeout(()=>{
                 const list = []
-                $(".mod_episode").find('span').each((i, dom) => {
+                $(".episode-list").find('.episode-item').each((i,dom)=>{
+                    const params = dom.getAttribute('dt-params')
+                    const cid=getQueryString('cid',params)
+                    const vid=getQueryString('vid',params)
+                    const urlHead = 'https://v.qq.com/x/cover/'
                     const img = $(dom).find('img')[0]
-                    const a = $(dom).find('a')[0]
-                    if (!img || img.src.indexOf("trailerlite") == -1) {
-                        list.push(`第${list.length+1}集 : ${redirectUrl}${a.href}`)
+                    if(!img || img.src.indexOf("trailerlite")==-1) {
+                      list.push(`第${list.length+1}集：${redirectUrl}${urlHead}${cid}/${vid}.html`)
                     }
                 })
                 console.log(list)
-            }, 3000)
-            var qqTitle = $('.mod_intro').find('.video_title');
-            qqTitle.eq(0).after(vipBtn);
+            },500)
+            var qqTitle = $('.play-title');
+            qqTitle.eq(0).append(vipBtn);
             $('#asvideoBtn').css({ 'font-size': '24px', display: 'inline-block', height: '36px', 'line-height': '36px', margin: '0 5px' });
             if ($('.player_title').length !== 0 && $('.player_title').find('a').length === 0) {
                 curWords = $('.player_title').text();
@@ -187,8 +203,8 @@
             resolve();
         }
     }).then(() => {
-        $('#asvideoBtn').on('click', function () {
-            window.location.href = `${redirectUrl}${window.location.href}`;
+        $('#asvideoBtn').on('click', function() {
+            window.location.href = `${redirectUrl}${window.location.href}` ;
         });
     });
 })();
